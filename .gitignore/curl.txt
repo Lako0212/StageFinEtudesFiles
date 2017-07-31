@@ -1,0 +1,170 @@
+
+
+curl -XPOST 'dhadlx22.dns21.socgen:9200/lawrence/tutorials' -d '{
+    "title" : "youtube Data API",
+    "category" : "PHP",
+    "tags" : ["Youtube","API","PHP"],
+    "duration": 600
+}'
+
+
+curl -XPOST 'dhadlx22.dns21.socgen:9200/lawrence/tutorials' -d '
+{
+    "title" : "Facebook API ertetr etrtr",
+    "category" : "PHP",
+    "tags" : ["Facebook","API","PHP"],
+    "duration": 60,
+    "test": "rzerez"
+}'
+
+
+curl -XPOST 'dhadlx22.dns21.socgen:9200/lawrence/tutorials' -d '{-d '{
+    "title" : "Indesign",
+    "category" : "Indisign",
+    "tags" : ["Indisgn","CV"],
+    "duration": 180,
+    "nombre" : "ezzer:zer/ezar (a457603)"
+}'
+curl -XPOST 'dhadlx22.dns21.socgen:9200/lawrence/tutorials' -d '{
+    "title" : "dfg",
+    "category" : "fgd",
+    "tags" : ["df","TEc","BT"],
+    "duration": 180,
+    "user-fdg" : "Lawrence KOTHA (a457603)"
+}'
+
+curl -XPOST 'dhadlx22.dns21.socgen:9200/lawrence/test' -d '{
+    'title' : 'Metier',
+    'category' : 'SG',
+    'tags' : ['Dev','TEc','BT'],
+    'duration": 180,
+    'user-fdg" : 'Lawrence KOTHA (a457603)'
+}'
+curl -XGET 'dhadlx22.dns21.socgen:9200/lawrence/tutorials/R0bKxI-1SVK_oK5Z4JzLyw'
+
+curl -XDELETE 'dhadlx22.dns21.socgen:9200/lawrence/tutorials/AVqqETThAGiYG1Lz3MzB' 
+
+curl -XPUT 'dhadlx22.dns21.socgen:9200/lawrence/person/_mapping
+{
+  "person": {
+    "properties": {
+      "file": {
+        "type": "attachment",
+        "fields": {
+          "content": {
+            "type": "string",
+            "term_vector":"with_positions_offsets",
+            "store": true
+          }
+        }
+      }
+    }
+  }
+}
+
+
+curl -XGET 'dhadlx22.dns21.socgen:9200/_analyse?text=Devoxx, la conférence des développeur passionnnées.' 
+
+curl -XPUT 'dhadlx22.dns21.socgen:9200/lawrence/_mapping' -d '
+{
+  "settings": {
+    "analysis": {
+      "filter": {
+        "french_elision": {
+        "type": "elision",
+            "articles": [ "l", "m", "t", "qu", "n", "s",
+                          "j", "d", "c", "jusqu", "quoiqu",
+                          "lorsqu", "puisqu"
+                        ]
+        },
+        "french_stop": {
+          "type": "stop",
+          "stopwords": "_french_" 
+        },
+        "french_keywords": {
+          "type":       "keyword_marker",
+          "keywords":   [] 
+        },
+        "french_stemmer": {
+          "type":       "stemmer",
+          "language":   "light_french"
+        }
+      },
+      "analyzer": {
+        "french": {
+          "tokenizer":  "standard",
+          "filter": [
+            "french_elision",
+            "lowercase",
+            "french_stop",
+            "french_keywords",
+            "french_stemmer"
+          ]
+        }
+      }
+    }
+  }
+}'
+
+
+
+
+################# ANALYSER #########################
+
+curl -XPUT 'dhadlx22.dns21.socgen:9200/edd' -d '{
+  "mappings": {
+    "metadata": {
+      "properties": {
+        "title": {
+          "type":     "text",
+          "analyzer": "standard"
+        }
+      }
+    }
+  }
+}' 
+
+
+
+curl -XPOST 'dhadlx22.dns21.socgen:9200/lawrence/test2' -d '{
+    "title" : "youtube Data API",
+    "category" : "PHP",
+    "tags" : ["Youtube","API","PHP"],
+    "duration": 600
+}'
+
+curl -XDELETE 'dhadlx22.dns21.socgen:9200/lawrence'
+
+curl -XDELETE 'localhost:9200/twitter?prett
+
+
+########### CREER UN INDEX ################
+
+
+
+curl -XPUT 'dhadlx22.dns21.socgen:9200/lawrence' -d '{
+    "settings" : {
+        "number_of_shards" : 1,
+        "number_of_replicas" : 1
+    }
+}'
+
+curl -XPUT 'dhadlx22.dns21.socgen:9200/lawrence1/edd' -d '{
+    "mappings" : {
+        "edd" : {
+            "properties" : {
+                "nom" : { "type" : "text" }
+             }
+        }
+    }
+}'
+
+
+
+{
+   "query" : {
+      "query_string" : {
+          "query" : "iTextSharp"
+       }
+    }
+}

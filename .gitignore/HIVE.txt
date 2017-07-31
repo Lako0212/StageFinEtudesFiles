@@ -1,0 +1,25 @@
+
+
+****************************************************************************
+													
+						HIVE 
+
+****************************************************************************
+
+sudo su -haddadm 
+hive 
+
+show 
+use 
+discribe 
+
+
+DROP DATABASE LKOTHA IF it EXISTS()
+
+CREATE DATABASE LKOTHA 
+
+*********** TABLE EXTERNE 
+
+create external table wan_test_urta_all (line STRING);
+
+LOAD DATA INPATH ‘/user/haddadm/wan_test/wan_test_urta.txt' OVERWRITE INTO TABLE wan_test_urta_all;

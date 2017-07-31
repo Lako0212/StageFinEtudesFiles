@@ -1,0 +1,120 @@
+use lakeh_bddf_a1546_cms;
+
+select 
+r.cle_actr,
+r.id_actr,
+r.cd_eqp,
+dte.LABEL_YYYY_MM_DD_HH24_15INT,
+'-999',
+'-999',
+irf.MEDIA_TYPE_KEY,
+(SUM(irf.CUSTOMER_RING_DURATION)/count(irf.INTERACTION_RESOURCE_ID)),
+'2017-05-29',
+1,
+to_date(dte.LABEL_YYYY_MM_DD_HH24_15INT),
+'101'
+
+from 
+INTERACTION_RESOURCE_FACT as irf
+JOIN ro3c.ext_d_crcm_dim_acteur as r ON (r.cle_actr = irf.RESOURCE_KEY)
+JOIN ext_DATE_TIME as dte ON (irf.START_DATE_TIME_KEY = dte.DATE_TIME_KEY)
+
+where
+irf.MEDIA_TYPE_KEY = '3' AND irf.CUSTOMER_TALK_DURATION > 0
+
+group by
+r.cle_actr, r.id_actr, r.cd_eqp, dte.LABEL_YYYY_MM_DD_HH24_15INT,irf.MEDIA_TYPE_KEY
+
+******************************************************************
+
+
+
+INSERT OVERWRITE  TABLE "+context.CTX_ROCQ_HIVE_DATABASE+".F_CRCM_FLUX_INDICATEUR  partition(dt  ,num_indicateur) 
+
+SELECT  ind1.valeur_indicateur,ind2.valeur_indicateur,ind1.valeur_indicateur/ind2.valeur_indicateur
+
+from F_CRCM_FLUX_INDICATEUR ind1
+
+join F_CRCM_FLUX_INDICATEUR ind2 on ( ind1.cle_actr=ind2.cle_actr and
+                                      ind1.id_actr=ind2.id_actr and
+                                      ind1.cd_eqp=ind2.cd_eqp and
+                                      ind1.dt_quart_d_heure=ind2.dt_quart_d_heure )
+where  ind1.num_indicateur=101 and ind2.num_indicateur=11 ;"
+
+
+
+SELECT  ind1.valeur_indicateur,ind1.valeur_indicateur,ind1.valeur_indicateur/ind2.valeur_indicateur
+
+from F_CRCM_FLUX_INDICATEUR ind1
+
+join F_CRCM_FLUX_INDICATEUR ind2 on ( ind1.cle_actr=ind2.cle_actr and
+                                      ind1.id_actr=ind2.id_actr and
+                                      ind1.cd_eqp=ind2.cd_eqp and
+                                      ind1.dt_quart_d_heure=ind2.dt_quart_d_heure )
+where  ind1.num_indicateur=101 and ind2.num_indicateur=11 ;"
+
+
+hive -e "
+WITH ind11 AS (
+SELECT *  FROM F_CRCM_FLUX_INDICATEUR
+WHERE num_indicateur=11 )
+,
+
+ind101 AS (
+SELECT * FROM F_CRCM_FLUX_INDICATEUR
+WHERE num_indicateur=101)
+
+
+SELECT ind101.valeur_indicateur/ind11.valeur_indicateur 
+from ind11
+join ind101 on ( ind11.cle_actr=ind101.cle_actr and
+                                      ind11.id_actr=ind101.id_actr and
+                                      ind11.cd_eqp=ind101.cd_eqp and
+                                      ind11.dt_quart_d_heure=ind101.dt_quart_d_heure )
+
+
+
+
+
+
+
+*********************************************************************
+
+SELECT 
+  ind1.cle_Flux,
+  ind2.cle_Flux,
+  ind1.Cle_actr,
+  ind1.Id_actr,
+  ind1.Cd_eqp,
+  ind1.Dt_quart_d_heure,
+  ind1.cle_Flux,
+  ind1.Type_retrait,
+  ind1.Type_media,
+  103 num_indicateur,
+  ind1.top_courant,
+  ind1.cle_actr,
+  ind1.valeur_indicateur,
+  ind2.valeur_indicateur,
+  CASE
+    WHEN COALESCE(ind2.valeur_indicateur,0) = 0
+    THEN 0
+    ELSE ind1.valeur_indicateur/ind2.valeur_indicateur
+  END
+FROM DDRPDDRPV_DWH.F_CRCM_FLUX_INDICATEUR ind1
+JOIN DDRPDDRPV_DWH.F_CRCM_FLUX_INDICATEUR ind2
+ON ( ind1.cle_actr=ind2.cle_actr
+AND ind1.id_actr=ind2.id_actr
+AND ind1.cd_eqp=ind2.cd_eqp
+AND ind1.dt_quart_d_heure=ind2.dt_quart_d_heure
+--AND ind1.cle_Flux=ind2.cle_Flux
+--AND ind1.Type_media=ind2.Type_media
+--AND ind1.Type_retrait=ind2.Type_retrait
+--AND ind1.top_courant=ind2.top_courant
+  )
+WHERE ind1.num_indicateur =11
+AND ind2.num_indicateur   =10
+
+
+******************************************************************
+
+TABLE ext_d_crcm_dim_acteur DANS RO3C ===== TABLE RESOURCE
